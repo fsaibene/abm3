@@ -58,8 +58,6 @@ public final class VolleySingleton {
      */
     public <T> void addToRequestQueue(Request<T> req) {
         getRequestQueue().add(req);
-        Log.i("fer",getRequestQueue().toString());
-
     }
 
 }

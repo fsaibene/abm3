@@ -73,6 +73,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/universal_margin">
 
+            <TextView
+                android:text="ID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/idGasto"
+                android:layout_weight="1"
+                android:visibility="invisible"/>
+
             <EditText
                 android:id="@+id/descripcion"
                 android:layout_width="match_parent"
@@ -93,15 +101,18 @@
         android:onClick="alClickearBoton"
         android:text="@string/boton"
         android:textColor="@android:color/white" />
+
     <Button
         android:id="@+id/botonBorrar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/universal_margin"
+        android:layout_height="wrap_content"
 
         android:onClick="alClickearBotonBorrar"
         android:text="BORRAR"
-        android:textColor="@android:color/white" />
+        android:textColorHighlight="@android:color/holo_red_dark"
+        android:layout_above="@+id/boton"
+        android:layout_alignLeft="@+id/boton"
+        android:layout_alignStart="@+id/boton"
+        android:layout_alignRight="@+id/boton"
+        android:layout_alignEnd="@+id/boton" />
 </RelativeLayout>

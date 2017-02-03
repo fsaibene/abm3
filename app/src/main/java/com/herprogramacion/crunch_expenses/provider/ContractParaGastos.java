@@ -66,7 +66,7 @@ public class ContractParaGastos {
         private Columnas() {
             // Sin instancias
         }
-
+        public static final String TABLE_NAME ="gasto";
         public final static String MONTO = "monto";
         public final static String ETIQUETA = "etiqueta";
         public final static String FECHA = "fecha";

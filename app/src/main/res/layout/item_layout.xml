@@ -40,5 +40,14 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@android:color/black" />
 
+    <TextView
+        android:id="@+id/idGasto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="holi"
+        android:layout_alignBaseline="@+id/monto"
+        android:layout_alignBottom="@+id/monto"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"/>
 
 </RelativeLayout>

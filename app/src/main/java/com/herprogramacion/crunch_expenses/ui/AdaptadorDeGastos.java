@@ -23,18 +23,19 @@ public class AdaptadorDeGastos extends RecyclerView.Adapter<AdaptadorDeGastos.Vi
     private Cursor cursor;
     private Context context;
 
-
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // Campos respectivos de un item
         public TextView monto;
         public TextView etiqueta;
         public TextView fecha;
+        public TextView idRemota;
 
         public ViewHolder(View v) {
             super(v);
             monto = (TextView) v.findViewById(R.id.monto);
             etiqueta = (TextView) v.findViewById(R.id.etiqueta);
             fecha = (TextView) v.findViewById(R.id.fecha);
+            idRemota = (TextView) v.findViewById(R.id.idGasto);
         }
 
         @Override
@@ -46,14 +47,17 @@ public class AdaptadorDeGastos extends RecyclerView.Adapter<AdaptadorDeGastos.Vi
         public void onItemClick(View view, int position);
     }
     public static Gasto irAEditar(RecyclerView recyclerView, int position, View v){
+        TextView idGasto = (TextView) v.findViewById(R.id.idGasto);
         TextView monto = (TextView) v.findViewById(R.id.monto);
         TextView etiqueta = (TextView) v.findViewById(R.id.etiqueta);
         TextView fecha = (TextView) v.findViewById(R.id.fecha);
+
         String montoEdit = (String)monto.getText();
         String etiquetaEdit = (String)etiqueta.getText();
         String fechaEdit = (String)fecha.getText();
-        Log.i("MONTOEDIT",montoEdit);
-        Gasto retorno = new Gasto("1", Integer.valueOf(montoEdit.substring(1)), etiquetaEdit, fechaEdit, "buscar");
+        String idGastoEdit = (String)idGasto.getText();
+
+        Gasto retorno = new Gasto(idGastoEdit, Integer.valueOf(montoEdit.substring(1)), etiquetaEdit, fechaEdit, "buscar");
         return  retorno;
     }
 
@@ -81,16 +85,18 @@ public class AdaptadorDeGastos extends RecyclerView.Adapter<AdaptadorDeGastos.Vi
         String monto;
         String etiqueta;
         String fecha;
-        Button btnBorrar;
+        String idRemota;
 
         monto = cursor.getString(1);
         etiqueta = cursor.getString(2);
         fecha = cursor.getString(3);
+        idRemota = cursor.getString(5);
 
 
         viewHolder.monto.setText("$"+monto);
         viewHolder.etiqueta.setText(etiqueta);
         viewHolder.fecha.setText(fecha);
+        viewHolder.idRemota.setText(idRemota);
     }
 
     public void swapCursor(Cursor newCursor) {

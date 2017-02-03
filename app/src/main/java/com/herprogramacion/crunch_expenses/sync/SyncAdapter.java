@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import android.content.SyncResult;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -50,7 +51,7 @@ import java.util.Map;
  */
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
     private static final String TAG = SyncAdapter.class.getSimpleName();
-
+    public Gasto g;
     ContentResolver resolver;
     private Gson gson = new Gson();
 
@@ -175,7 +176,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         }
     }
 
-    private void realizarSincronizacionRemota() {
+    public void realizarSincronizacionRemota() {
         Log.i(TAG, "Actualizando el servidor...");
 
         iniciarActualizacion();
@@ -221,6 +222,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                             }
                         }
                 );
+//                Cursor c = getRegistroBorrado();
+
             }
 
         } else {
@@ -228,6 +231,80 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         }
         c.close();
     }
+    public void realizarSincronizacionRemotaBorrados() {
+        Log.i("entro sync remota", "entro");
+        Gasto g = this.g;
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(
+                new JsonObjectRequest(
+                        Request.Method.POST,
+                        Constantes.DELETE_URL,
+                        Utilidades.deGastoAJSONObject(g),
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                              Log.i("respuesta de servidor",String.valueOf(response));
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d(TAG, "Error Volley: " + error.getMessage());
+                            }
+                        }
+
+                ) {
+                    @Override
+                    public Map<String, String> getHeaders() {
+                        Map<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json; charset=utf-8");
+                        headers.put("Accept", "application/json");
+                        return headers;
+                    }
+
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/json; charset=utf-8" + getParamsEncoding();
+                    }
+                }
+        );
+    }
+    public void realizarSincronizacionRemotaUpdate() {
+        Gasto g = this.g;
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(
+                new JsonObjectRequest(
+                        Request.Method.POST,
+                        Constantes.UPDATE_URL,
+                        Utilidades.deGastoAJSONObject(g),
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.i("respuesta de servidor",String.valueOf(response));
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d(TAG, "Error Volley: " + error.getMessage());
+                            }
+                        }
+
+                ) {
+                    @Override
+                    public Map<String, String> getHeaders() {
+                        Map<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json; charset=utf-8");
+                        headers.put("Accept", "application/json");
+                        return headers;
+                    }
+
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/json; charset=utf-8" + getParamsEncoding();
+                    }
+                }
+        );
+    }
+
 
     /**
      * Obtiene el registro que se acaba de marcar como "pendiente por sincronizar" y
@@ -479,5 +556,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         Log.i(TAG, "Cuenta de usuario obtenida.");
         return newAccount;
     }
+    public void setGastoABorrar(Gasto c){
+        this.g = c;
+    }
+    public void getGastoABorrar(Gasto c){
+        this.g = c;
+    }
+
 
 }

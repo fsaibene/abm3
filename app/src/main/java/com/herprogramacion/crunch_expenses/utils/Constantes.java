@@ -21,6 +21,8 @@ public class Constantes {
      */
     public static final String GET_URL = IP + PUERTO_HOST + "/Crunch_Expenses/web/obtener_gastos.php";
     public static final String INSERT_URL = IP + PUERTO_HOST + "/Crunch_Expenses/web/insertar_gasto.php";
+    public static final String DELETE_URL = IP + PUERTO_HOST + "/Crunch_Expenses/web/borrar_gasto.php";
+    public static final String UPDATE_URL = IP + PUERTO_HOST + "/Crunch_Expenses/web/actualizar_registro.php";
 
     /**
      * Campos de las respuestas Json

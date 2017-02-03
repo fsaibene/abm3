@@ -5,6 +5,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.herprogramacion.crunch_expenses.provider.ContractParaGastos;
+import com.herprogramacion.crunch_expenses.web.Gasto;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,17 +38,20 @@ public class Utilidades {
      */
     public static JSONObject deCursorAJSONObject(Cursor c) {
         JSONObject jObject = new JSONObject();
+        String idGasto;
         String monto;
         String etiqueta;
         String fecha;
         String descripcion;
 
+        idGasto = c.getString(COLUMNA_ID_REMOTA);
         monto = c.getString(COLUMNA_MONTO);
         etiqueta = c.getString(COLUMNA_ETIQUETA);
         fecha = c.getString(COLUMNA_FECHA);
         descripcion = c.getString(COLUMNA_DESCRIPCION);
 
         try {
+            jObject.put(ContractParaGastos.Columnas.ID_REMOTA, idGasto);
             jObject.put(ContractParaGastos.Columnas.MONTO, monto);
             jObject.put(ContractParaGastos.Columnas.ETIQUETA, etiqueta);
             jObject.put(ContractParaGastos.Columnas.FECHA, fecha);
@@ -57,6 +61,34 @@ public class Utilidades {
         }
 
         Log.i("Cursor a JSONObject", String.valueOf(jObject));
+
+        return jObject;
+    }
+    public static JSONObject deGastoAJSONObject(Gasto g) {
+        JSONObject jObject = new JSONObject();
+        String idGasto;
+        String monto;
+        String etiqueta;
+        String fecha;
+        String descripcion;
+
+        monto = String.valueOf(g.monto);
+        etiqueta = g.etiqueta;
+        idGasto = g.idGasto;
+        fecha = g.fecha;
+        descripcion = g.descripcion;
+
+        try {
+            jObject.put("idGasto", idGasto);
+            jObject.put(ContractParaGastos.Columnas.MONTO, monto);
+            jObject.put(ContractParaGastos.Columnas.ETIQUETA, etiqueta);
+            jObject.put(ContractParaGastos.Columnas.FECHA, fecha);
+            jObject.put(ContractParaGastos.Columnas.DESCRIPCION, descripcion);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.i("Gasto a JSONObject", String.valueOf(jObject));
 
         return jObject;
     }
